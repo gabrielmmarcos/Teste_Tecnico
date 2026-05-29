@@ -332,15 +332,15 @@ curl -X GET "http://127.0.0.1:8000/webhooks/all?skip=0&limit=10" \
 
 
 
-## Visão de Produção na AWS
+# Visão de Produção na AWS
 
-### Arquitetura Escalável na Cloud
+## Arquitetura Escalável na Cloud
 
 Esta solução foi projetada com princípios de escalabilidade em mente. Na AWS, a arquitetura escalaria conforme descrito abaixo.
 
 ---
 
-#### 1. Computação (Serverless com Lambda)
+### 1. Computação (Serverless com Lambda)
 
 Em vez de executar um servidor FastAPI tradicional, utilizaríamos:
 
