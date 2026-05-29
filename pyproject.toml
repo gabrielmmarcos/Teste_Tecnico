@@ -1,0 +1,70 @@
+[project]
+name = "mundo-invest"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "gabrielmmarcos",email = "gabrielmmarcos1@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard] (>=0.116.1,<0.117.0)",
+    "psycopg[binary] (>=3.3.4,<4.0.0)",
+    "sqlalchemy[asyncio] (>=2.0.50,<3.0.0)",
+    "pydantic-settings (>=2.10.1,<3.0.0)",
+    "alembic (>=1.16.5,<2.0.0)",
+    "fastapi-users[sqlalchemy] (>=14.0.1,<15.0.0)",
+    "aiosqlite (>=0.22.1,<0.23.0)",
+]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[tool.poetry]
+packages = [{include = "mundo_invest", from = "src"}]
+
+
+[tool.ruff]
+line-length = 79
+extend-exclude = ['migrations']
+
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT', 'FAST']
+
+
+[tool.ruff.format]
+preview = true
+
+
+[tool.taskipy.tasks]
+run = 'fastapi dev src/mundo_invest/app.py'
+test =  'pytest --cov=src -vv'
+post_test = 'coverage html'
+lint = 'ruff check . && ruff check . --diff'
+format = 'ruff check . --fix && ruff format .'
+pre_test = 'task lint'
+
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+asyncio_default_fixture_loop_scope = 'function'
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.12.12"
+pytest = "^8.4.2"
+pytest-cov = "^6.2.1"
+taskipy = "^1.14.1"
+pytest-asyncio = "^1.1.0"
+testcontainers = "^4.12.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+concurrency = ["thread", "greenlet"]
