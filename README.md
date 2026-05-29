@@ -17,7 +17,7 @@ A API Mundo Invest é um sistema construído com FastAPI e PostgreSQL que permit
 
 ---
 
-## 1. Clonar o repositório
+#### 1. Clonar o repositório
 
 ```bash
 git clone <repository-url>
@@ -26,7 +26,7 @@ cd mundo-invest
 
 ---
 
-## 2. Configurar variáveis de ambiente
+#### 2. Configurar variáveis de ambiente
 
 Criar um arquivo `.env` na raiz do projeto:
 
@@ -44,7 +44,7 @@ DATABASE_URL=postgresql+psycopg://app_user:app_password@app_database:5432/app_db
 
 ---
 
-## 3. Executar a aplicação
+#### 3. Executar a aplicação
 
 ```bash
 docker-compose up --build
@@ -59,7 +59,7 @@ A aplicação iniciará automaticamente com:
 
 ---
 
-## 4. Acessar a aplicação
+#### 4. Acessar a aplicação
 
 API:
 
@@ -83,9 +83,7 @@ http://localhost:8000/docs
 
 ---
 
-# Instalação e Execução
-
-## 1. Clonar o repositório
+#### 1. Clonar o repositório
 
 ```bash
 git clone <repository-url>
@@ -94,7 +92,7 @@ cd mundo-invest
 
 ---
 
-## 2. Configurar variáveis de ambiente
+#### 2. Configurar variáveis de ambiente
 
 Criar arquivo `.env` na raiz do projeto:
 
@@ -112,7 +110,7 @@ DATABASE_URL=postgresql+psycopg://app_user:app_password@app_database:5432/app_db
 
 ---
 
-## 3. Subi o banco de dados (PostgreSQL + API)
+#### 3. Subi o banco de dados (PostgreSQL + API)
 
 ```bash
 docker-compose up --build
@@ -125,7 +123,7 @@ Isso iniciará:
 
 ---
 
-## 4. Instalar dependências
+#### 4. Instalar dependências
 
 ```bash
 poetry install
@@ -133,7 +131,7 @@ poetry install
 
 ---
 
-## 5. Executar migrações do banco de dados
+#### 5. Executar migrações do banco de dados
 
 ```bash
 poetry run alembic upgrade head
@@ -141,7 +139,7 @@ poetry run alembic upgrade head
 
 ---
 
-## 6. Executar a aplicação
+#### 6. Executar a aplicação
 
 ### Usando taskipy (recomendado)
 
@@ -151,7 +149,7 @@ poetry run task run
 
 ---
 
-## 7. Acessar a aplicação
+#### 7. Acessar a aplicação
 
 API:
 
