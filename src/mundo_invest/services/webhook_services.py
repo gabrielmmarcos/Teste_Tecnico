@@ -8,7 +8,6 @@ from sqlalchemy.orm import selectinload
 from mundo_invest.enums.enums import PrioridadeEnum, StatusEnum
 from mundo_invest.models.models import Cliente, Webhook
 from mundo_invest.schemas.root_schemas import FilterPage
-from mundo_invest.pipefy_client.pipefy import update_pipefy_card_field_mutation
 
 
 # funcao que lista todos os clientes
@@ -68,7 +67,7 @@ async def create_webhook_service(
         cliente.prioridade = PrioridadeEnum.NORMAL
     # altera o enum do status para processado
     cliente.status = StatusEnum.PROCESSADO
-    
+
     # # payload para atualizar status no Pipefy
     # status_payload = update_pipefy_card_field_mutation(
     #     webhook.card_id,

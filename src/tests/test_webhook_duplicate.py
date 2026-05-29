@@ -38,7 +38,7 @@ async def test_create_webhook_duplicate_event(
         event_id="evento-duplicado",
         card_id="card-1",
         cliente_id=cliente.id,
-        cliente=cliente
+        cliente=cliente,
     )
 
     session.add(webhook)

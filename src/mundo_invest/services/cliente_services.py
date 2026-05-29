@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from mundo_invest.models.models import Cliente
 from mundo_invest.schemas.cliente_schemas import ClientePublic
 from mundo_invest.schemas.root_schemas import FilterPage
+
 # from mundo_invest.pipefy_client.pipefy import create_pipefy_card_mutation
 
 
@@ -50,9 +51,9 @@ async def create_client_service(
     await session.commit()
     # atualiza os dados do objeto com as informações do banco
     await session.refresh(db_client)
-    
+
     # payload estruturado para criação do card no Pipefy
     # pipefy_payload = create_pipefy_card_mutation(db_client)
-    
+
     # retonar o cliente
     return db_client

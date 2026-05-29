@@ -3,7 +3,6 @@ from mundo_invest.models.models import Cliente
 
 # mutation para criar card no Pipefy
 def create_pipefy_card_mutation(cliente: Cliente):
-
     return {
         "query": """
         mutation CreateCard(
@@ -49,13 +48,13 @@ def create_pipefy_card_mutation(cliente: Cliente):
         },
     }
 
+
 # mutation para atualizar o card
 def update_pipefy_card_field_mutation(
     card_id: str,
     field_id: str,
     new_value: str,
 ):
-
     return {
         "query": """
         mutation UpdateCardField(
