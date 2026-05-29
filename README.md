@@ -163,6 +163,7 @@ Swagger UI:
  http://127.0.0.1:8000/docs
 ```
 
+---
 
 ## Executar Testes
 ### Executar todos os testes com cobertura
@@ -176,9 +177,9 @@ poetry run task test
 - test_webhook_duplicate.py - Teste de prevenção de webhooks duplicados
 - test_db.py - Teste de integração com banco de dados
 
-## Exemplos de Requisição (curl)
-
 ---
+
+## Exemplos de Requisição (curl)
 
 ### Endpoint 1: Criar Cliente
 
