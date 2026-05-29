@@ -1,80 +1,197 @@
-Mundo Invest - Internal Management API
+# Mundo Invest - Internal Management API
 Sistema interno para gerenciamento de clientes, controle de patrimônio investido e mapeamento de processos.
 
-📋 Visão Geral
+## Visão Geral
 A API Mundo Invest é um sistema construído com FastAPI e PostgreSQL que permite:
 
-Gerenciamento de Clientes: Criar e listar clientes com dados de patrimônio e tipo de solicitação
-Processamento de Webhooks: Receber e processar eventos de webhooks do Pipefy para atualizar prioridade de clientes
-Análise de Priorização: Sistema inteligente que classifica clientes por prioridade baseado em eventos
-🚀 Quickstart - Execução Local
-Pré-requisitos
-Python 3.13+
-Docker & Docker Compose
-Poetry (gerenciador de pacotes)
-Instalação e Execução
-1. Clonar o repositório
+- Gerenciamento de Clientes: Criar e listar clientes com dados de patrimônio e tipo de solicitação
+- Processamento de Webhooks: Receber e processar eventos de webhooks do Pipefy para atualizar prioridade de clientes
+- Análise de Priorização: Sistema inteligente que classifica clientes por prioridade baseado em eventos
+
+## Quickstart - Execução com Docker (recomendado)
+
+### Pré-requisitos
+
+* Docker
+* Docker Compose
+
+---
+
+## 1. Clonar o repositório
+
+```bash
 git clone <repository-url>
 cd mundo-invest
-2. Configurar variáveis de ambiente
-Criar arquivo .env na raiz do projeto:
+```
 
-DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/mundo_invest
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=mundo_invest
-3. Iniciar serviços (PostgreSQL)
-docker-compose up -d
+---
+
+## 2. Configurar variáveis de ambiente
+
+Criar um arquivo `.env` na raiz do projeto:
+
+```env
+POSTGRES_USER=app_user
+POSTGRES_PASSWORD=app_password
+POSTGRES_DB=app_db
+
+# URL para execução via Docker
+DATABASE_URL=postgresql+psycopg://app_user:app_password@app_database:5432/app_db
+
+# URL para execução local sem Docker
+# DATABASE_URL=postgresql+psycopg://app_user:app_password@localhost:5432/app_db
+```
+
+---
+
+## 3. Executar a aplicação
+
+```bash
+docker-compose up --build
+```
+
+A aplicação iniciará automaticamente com:
+
+* PostgreSQL na porta `5432`
+* FastAPI na porta `8000`
+* Migrações Alembic executadas automaticamente
+* Dependências instaladas automaticamente
+
+---
+
+## 4. Acessar a aplicação
+
+API:
+
+```txt
+http://localhost:8000
+```
+
+Swagger UI:
+
+```txt
+http://localhost:8000/docs
+```
+
+## Quickstart - Execução Local
+
+### Pré-requisitos
+
+* Python 3.13+
+* Docker & Docker Compose
+* Poetry (gerenciador de pacotes)
+
+---
+
+# Instalação e Execução
+
+## 1. Clonar o repositório
+
+```bash
+git clone <repository-url>
+cd mundo-invest
+```
+
+---
+
+## 2. Configurar variáveis de ambiente
+
+Criar arquivo `.env` na raiz do projeto:
+
+```env
+POSTGRES_USER=app_user
+POSTGRES_PASSWORD=app_password
+POSTGRES_DB=app_db
+
+# URL para execução local
+# DATABASE_URL=postgresql+psycopg://app_user:app_password@localhost:5432/app_db
+
+# URL para execução via Docker
+DATABASE_URL=postgresql+psycopg://app_user:app_password@app_database:5432/app_db
+```
+
+---
+
+## 3. Subi o banco de dados (PostgreSQL + API)
+
+```bash
+docker-compose up --build
+```
+
 Isso iniciará:
 
-PostgreSQL na porta 5432
-API FastAPI na porta 8000
-4. Instalar dependências
+* PostgreSQL na porta 5432
+* API FastAPI na porta 8000
+
+---
+
+## 4. Instalar dependências
+
+```bash
 poetry install
-5. Executar migrações do banco de dados
-# Com poetry
+```
+
+---
+
+## 5. Executar migrações do banco de dados
+
+```bash
 poetry run alembic upgrade head
-6. Executar a aplicação
-# Usando taskipy (recomendado)
+```
+
+---
+
+## 6. Executar a aplicação
+
+### Usando taskipy (recomendado)
+
+```bash
 poetry run task run
+```
 
-# Ou diretamente com FastAPI dev server
-poetry run fastapi dev src/mundo_invest/app.py
-A API estará disponível em: http://localhost:8000
+---
 
-Documentação interativa (Swagger UI): http://localhost:8000/docs
+## 7. Acessar a aplicação
 
-🧪 Executar Testes
-# Executar todos os testes com cobertura
+API:
+
+```txt
+http://127.0.0.1:8000
+```
+
+Swagger UI:
+
+```txt
+ http://127.0.0.1:8000/docs
+```
+
+
+## Executar Testes
+### Executar todos os testes com cobertura
 poetry run task test
 
-# Executar testes com verbose
-poetry run pytest -vv
-
-# Gerar relatório de cobertura HTML
-poetry run pytest --cov=src --cov-report=html
-Testes disponíveis:
+### Testes disponíveis:
 
 test_app.py - Testes de endpoints da API
-test_client.py - Testes do serviço de clientes
-test_webhook_prioridade.py - Testes de priorização via webhook
-test_webhook_duplicate.py - Testes de prevenção de webhooks duplicados
-test_db.py - Testes de integração com banco de dados
-📝 Linting e Formatação
-# Executar linter (Ruff)
-poetry run task lint
+test_client.py - Teste de criação de cliente
+test_webhook_prioridade.py - Teste de priorização via webhook
+test_webhook_duplicate.py - Teste de prevenção de webhooks duplicados
+test_db.py - Teste de integração com banco de dados
 
-# Formatar código
-poetry run task format
-📡 Exemplos de Requisição (curl)
-Endpoint 1: Criar Cliente
-POST /clientes/criar_cliente
+## Exemplos de Requisição (curl)
+
+---
+
+### Endpoint 1: Criar Cliente
+
+`POST /clientes/criar_cliente`
 
 Cria um novo cliente no sistema com informações de patrimônio e tipo de solicitação.
 
-Exemplo de requisição:
+#### Exemplo de requisição
 
-curl -X POST "http://localhost:8000/clientes/criar_cliente" \
+```bash
+curl -X POST "http://127.0.0.1:8000/clientes/criar_cliente" \
   -H "Content-Type: application/json" \
   -d '{
     "cliente_nome": "João Silva",
@@ -82,8 +199,11 @@ curl -X POST "http://localhost:8000/clientes/criar_cliente" \
     "tipo_solicitacao": "Consultoria",
     "valor_patrimonio": 50000.00
   }'
-Resposta esperada (201 Created):
+```
 
+#### Resposta esperada (201 Created)
+
+```json
 {
   "cliente_nome": "João Silva",
   "cliente_email": "joao.silva@example.com",
@@ -92,21 +212,29 @@ Resposta esperada (201 Created):
   "status": "AGUARDANDO_ANALISE",
   "prioridade": null
 }
-Campos da requisição:
+```
 
-Campo	Tipo	Descrição	Requerido
-cliente_nome	string	Nome completo do cliente	✅
-cliente_email	string	Email válido do cliente	✅
-tipo_solicitacao	string	Tipo de solicitação/serviço	✅
-valor_patrimonio	float	Valor total do patrimônio investido	✅
-Endpoint 2: Webhook - Atualizar Prioridade (Pipefy)
-POST /webhooks/pipefy/card-updated
+### Campos da requisição
+
+| Campo            | Tipo   | Descrição                           | Requerido |
+| ---------------- | ------ | ----------------------------------- | --------- |
+| cliente_nome     | string | Nome completo do cliente            | ✅         |
+| cliente_email    | string | Email válido do cliente             | ✅         |
+| tipo_solicitacao | string | Tipo de solicitação/serviço         | ✅         |
+| valor_patrimonio | float  | Valor total do patrimônio investido | ✅         |
+
+---
+
+## Endpoint 2: Webhook - Atualizar Prioridade
+
+`POST /webhooks/pipefy/card-updated`
 
 Processa eventos de webhooks do Pipefy para atualizar a prioridade de um cliente existente.
 
-Exemplo de requisição:
+#### Exemplo de requisição
 
-curl -X POST "http://localhost:8000/webhooks/pipefy/card-updated" \
+```bash
+curl -X POST "http://127.0.0.1:8000/webhooks/pipefy/card-updated" \
   -H "Content-Type: application/json" \
   -d '{
     "event_id": "evt_12345",
@@ -114,39 +242,50 @@ curl -X POST "http://localhost:8000/webhooks/pipefy/card-updated" \
     "timestamp": "2024-05-28T15:30:00Z",
     "cliente_email": "joao.silva@example.com"
   }'
-Resposta esperada (200 OK):
+```
 
+#### Resposta esperada (200 OK)
+
+```json
 {
   "cliente_nome": "João Silva",
   "cliente_email": "joao.silva@example.com",
   "tipo_solicitacao": "Consultoria",
   "valor_patrimonio": 50000.00,
-  "status": "AGUARDANDO_ANALISE",
+  "status": "PROCESSADO",
   "prioridade": "ALTA"
 }
-Campos da requisição:
+```
 
-Campo	Tipo	Descrição	Requerido
-event_id	string	ID único do evento	✅
-card_id	string	ID do card no Pipefy	✅
-timestamp	string	Data/hora do evento (ISO 8601)	✅
-cliente_email	string	Email do cliente para vincular	✅
-Endpoint 3: Listar Clientes
-GET /clientes/all
+#### Campos da requisição
+
+| Campo         | Tipo   | Descrição                      | Requerido |
+| ------------- | ------ | ------------------------------ | --------- |
+| event_id      | string | ID único do evento             | ✅         |
+| card_id       | string | ID do card no Pipefy           | ✅         |
+| timestamp     | string | Data/hora do evento (ISO 8601) | ✅         |
+| cliente_email | string | Email do cliente para vincular | ✅         |
+
+---
+
+## Endpoint 3: Listar Clientes
+
+`GET /clientes/all`
 
 Lista todos os clientes cadastrados com suporte a paginação.
 
-Exemplo de requisição:
+### Exemplo de requisição
 
-# Listar todos os clientes
-curl -X GET "http://localhost:8000/clientes/all" \
+#### Listar todos os clientes
+
+```bash
+curl -X GET "http://127.0.0.1:8000/clientes/all?skip=0&limit=10" \
   -H "Content-Type: application/json"
+```
 
-# Com paginação (skip=0, limit=10)
-curl -X GET "http://localhost:8000/clientes/all?skip=0&limit=10" \
-  -H "Content-Type: application/json"
-Resposta esperada:
+#### Resposta esperada
 
+```json
 {
   "clientes": [
     {
@@ -154,22 +293,31 @@ Resposta esperada:
       "cliente_email": "joao.silva@example.com",
       "tipo_solicitacao": "Consultoria",
       "valor_patrimonio": 50000.00,
-      "status": "AGUARDANDO_ANALISE",
+      "status": "PROCESSADO",
       "prioridade": "ALTA"
     }
   ]
 }
-Endpoint 4: Listar Webhooks
-GET /webhooks/all
+```
+
+---
+
+## Endpoint 4: Listar Webhooks
+
+`GET /webhooks/all`
 
 Lista todos os eventos de webhook processados.
 
-Exemplo de requisição:
+#### Exemplo de requisição
 
-curl -X GET "http://localhost:8000/webhooks/all?skip=0&limit=10" \
+```bash
+curl -X GET "http://127.0.0.1:8000/webhooks/all?skip=0&limit=10" \
   -H "Content-Type: application/json"
-Resposta esperada:
+```
 
+#### Resposta esperada
+
+```json
 {
   "webhooks": [
     {
@@ -180,137 +328,215 @@ Resposta esperada:
     }
   ]
 }
-🌍 Visão de Produção na AWS
-Arquitetura Escalável na Cloud
-Esta solução foi projetada com princípios de escalabilidade em mente. Na AWS, a arquitetura escalaria conforme descrito abaixo:
+```
 
-1. Computação (Serverless com Lambda)
-Em vez de executar um servidor FastAPI tradicional, usaríamos:
+## Produção na AWS
 
-AWS Lambda: Funções serverless para cada operação (criar cliente, processar webhook, listar dados)
-Vantagem: Escalabilidade automática, pay-per-use, sem gerenciamento de servidor
-Configuração: Runtime Python 3.13+ com FastAPI + Mangum (adaptador ASGI)
-Concorrência: Suporta milhões de requisições simultâneas
-2. Gateway de API (API Gateway)
-API Gateway REST: Roteamento de requisições para funções Lambda
-Autenticação: IAM, API Keys, Cognito
-Rate Limiting: Proteção contra abuso
-CORS: Habilitado para frontend da web
-Cache: Respostas GET cacheadas em CloudFront para performance
-3. Banco de Dados
-Opção A: Amazon RDS (PostgreSQL) - Mais simples
+### Arquitetura Escalável na Cloud
 
-Instância PostgreSQL gerenciada com Auto Scaling
-Multi-AZ para alta disponibilidade
-Backups automáticos e snapshots
-Escalabilidade: Read replicas para distribuir carga de leitura
-Opção B: DynamoDB - Mais escalável (Recommended)
+Esta solução foi projetada com princípios de escalabilidade em mente. Na AWS, a arquitetura escalaria conforme descrito abaixo.
 
-Banco NoSQL totalmente gerenciado
-Escalabilidade automática (on-demand ou provisioned)
-Baixa latência (<10ms)
-Replicação global automática
-Estrutura de dados:
-Tabela: Clientes
-- PK: cliente_email (Partition Key)
-- GSI: status (para queries por status)
+---
 
-Tabela: Webhooks
-- PK: event_id (Partition Key)
-- GSI: cliente_email (para queries por cliente)
-4. Processamento Assíncrono de Webhooks
-Para lidar com grande volume de webhooks:
+#### 1. Computação (Serverless com Lambda)
 
-SQS (Simple Queue Service): Fila de mensagens para webhooks
+Em vez de executar um servidor FastAPI tradicional, utilizaríamos:
 
-Webhook entra em SQS → Lambda processa de forma assíncrona
-Retry automático com Dead Letter Queue (DLQ)
-Garante entrega "at-least-once"
-SNS (Simple Notification Service): Notificações em tempo real
+* AWS Lambda para cada operação:
 
-Publica eventos de webhook processados
-Subscribers recebem notificações (Email, SMS, Lambda)
-Fluxo de webhook:
+  * Criar cliente
+  * Processar webhook
+  * Listar dados
 
-Pipefy Webhook → API Gateway → Lambda → SQS → Processing Lambda → DynamoDB
-                                                                  ↓
-                                                            SNS (Notifications)
-5. Armazenamento e Logs
-S3: Armazena backups de dados, logs de auditoria
-CloudWatch: Logs centralizados das Lambdas
-X-Ray: Rastreamento distribuído para debugging
-CloudTrail: Auditoria de chamadas de API
-6. Segurança e Rede
-VPC Endpoints: Acesso privado a AWS Services
-Secrets Manager: Gerenciar credenciais de banco de dados
-KMS: Criptografia de dados em repouso
-WAF: Proteção contra ataques web (SQL injection, XSS, etc)
-7. Escalabilidade Esperada
-Métrica	Local	AWS
-Requisições/seg	~100	1,000,000+
-Tempo de resposta	~200ms	~50ms
-Disponibilidade	99%	99.99%
-Custo (mensal)	~$0	~$100-500*
-Setup time	1 dia	2-3 dias
-*Variável conforme volume
+#### Vantagens
 
-8. Diagrama de Arquitetura na AWS
-┌─────────────────────────────────────────────────────────────────┐
-│                    Pipefy / Clients                             │
-└──────────────────────────────┬──────────────────────────────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  CloudFront + WAF   │
-                    │  (Cache + Security) │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────▼──────────────┐
-                    │   API Gateway REST      │
-                    │ (Auth + Rate Limiting)  │
-                    └──────────┬──────────────┘
-                               │
-              ┌────────────────┼────────────────┐
-              │                │                │
-    ┌─────────▼────┐  ┌───────▼────┐  ┌──────▼──────┐
-    │ Lambda 1     │  │ Lambda 2   │  │ Lambda 3    │
-    │ (POST Client)│  │(GET Client)│  │(POST Webhook│
-    └─────────┬────┘  └───────┬────┘  └──────┬──────┘
-              │                │              │
-              └────────────────┼──────────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │   SQS (Webhooks)    │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │ Lambda Worker       │
-                    │ (Process Webhooks)  │
-                    └──────────┬──────────┘
-                               │
-            ┌──────────────────┼──────────────────┐
-            │                  │                  │
-    ┌───────▼────────┐  ┌──────▼──────┐  ┌─────▼────┐
-    │ DynamoDB       │  │  SNS        │  │ S3/Logs  │
-    │ (Data)         │  │ (Events)    │  │ (Audit)  │
-    └────────────────┘  └─────────────┘  └──────────┘
-9. Migração de Local para AWS
-Passo 1: Refatorar código FastAPI para suportar Lambda (Mangum)
+* Escalabilidade automática
+* Pay-per-use
+* Sem gerenciamento de servidores
+* Alta disponibilidade nativa
 
+#### Configuração
+
+* Runtime Python 3.13+
+* FastAPI + Mangum (adaptador ASGI)
+
+#### Concorrência
+
+* Suporte para milhões de requisições simultâneas
+
+---
+
+### 2. Gateway de API (API Gateway)
+
+#### API Gateway REST
+
+Responsável por:
+
+* Roteamento das requisições
+* Autenticação
+* Rate limiting
+* Controle de CORS
+* Cache de respostas
+
+#### Recursos
+
+* IAM
+* API Keys
+* Cognito
+* CloudFront cache
+
+---
+
+### 3. Banco de Dados
+
+#### Amazon RDS (PostgreSQL)
+
+##### Benefícios
+
+* PostgreSQL gerenciado
+* Auto Scaling
+* Multi-AZ
+* Backups automáticos
+* Read replicas
+
+
+### 4. Processamento Assíncrono de Webhooks
+
+#### SQS (Simple Queue Service)
+
+Fluxo:
+
+```txt id="6ttht1"
+Webhook → SQS → Lambda Worker → DynamoDB
+```
+
+##### Benefícios
+
+* Retry automático
+* Dead Letter Queue (DLQ)
+* Garantia "at-least-once"
+
+---
+
+#### SNS (Simple Notification Service)
+
+Responsável por:
+
+* Publicar eventos processados
+* Notificações em tempo real
+* Integração com Email, SMS e Lambdas
+
+---
+
+### 5. Armazenamento e Logs
+
+#### Serviços utilizados
+
+* S3 → backups e auditoria
+* CloudWatch → logs centralizados
+* X-Ray → tracing distribuído
+* CloudTrail → auditoria de APIs
+
+---
+
+### 6. Segurança e Rede
+
+#### Recursos AWS
+
+* VPC Endpoints
+* Secrets Manager
+* AWS KMS
+* AWS WAF
+
+#### Proteções
+
+* SQL Injection
+* XSS
+* Controle de acesso
+* Criptografia de dados
+
+---
+
+### 7. Escalabilidade Esperada
+
+| Métrica           | Local  | AWS        |
+| ----------------- | ------ | ---------- |
+| Requisições/seg   | ~100   | 1.000.000+ |
+| Tempo de resposta | ~200ms | ~50ms      |
+| Disponibilidade   | 99%    | 99.99%     |
+| Setup             | 1 dia  | 2-3 dias   |
+
+---
+
+### 8. Diagrama da Arquitetura AWS
+
+![Arquitetura AWS](./assets/aws-architecture.png)
+
+---
+
+### 9. Migração de Local para AWS
+
+#### Passo 1
+
+Refatorar FastAPI para Lambda com Mangum:
+
+```python id="0pn4g8"
 from mangum import Mangum
+
 handler = Mangum(app)
-Passo 2: Substituir SQLAlchemy + PostgreSQL por Boto3 + DynamoDB
+```
 
-Passo 3: Implementar async patterns para SQS
+---
 
-Passo 4: Deploy com SAM (AWS Serverless Application Model) ou Terraform
+#### Passo 2
 
-10. Estimativa de Custos (AWS)
-Lambda: $0.20 por 1M requisições (primeiros 1B/mês free)
-DynamoDB: $1.25 por GB (on-demand)
-API Gateway: $3.50 por 1M requisições
-Data Transfer: $0.09 por GB
-Total estimado: $100-500/mês para 10M requisições/mês
-📁 Estrutura do Projeto
+Substituir:
+
+* SQLAlchemy
+* PostgreSQL
+
+Por:
+
+* Boto3
+* DynamoDB
+
+---
+
+#### Passo 3
+
+Implementar processamento assíncrono com:
+
+* SQS
+* SNS
+* Workers Lambda
+
+---
+
+#### Passo 4
+
+Deploy utilizando:
+
+* AWS SAM
+* Terraform
+
+---
+
+#### 10. Estimativa de Custos (AWS)
+
+| Serviço       | Estimativa          |
+| ------------- | ------------------- |
+| Lambda        | $0.20 / 1M requests |
+| DynamoDB      | $1.25 / GB          |
+| API Gateway   | $3.50 / 1M requests |
+| Data Transfer | $0.09 / GB          |
+
+#### Estimativa total
+
+```txt id="kl7yrd"
+~ $100 - $500/mês para 10M requests/mês
+```
+
+## Estrutura do Projeto
 mundo-invest/
 ├── src/
 │   ├── mundo_invest/
@@ -348,7 +574,9 @@ mundo-invest/
 ├── alembic.ini                  # Configuração Alembic
 ├── entrypoint.sh                # Script de inicialização
 └── README.md                    # Este arquivo
-🔗 Dependências Principais
+
+
+## Dependências Principais
 FastAPI: Web framework moderno
 SQLAlchemy: ORM assíncrono
 Pydantic: Validação de dados
@@ -357,16 +585,3 @@ psycopg: Driver PostgreSQL assíncrono
 Pytest: Framework de testes
 Ruff: Linter e formatador
 Veja pyproject.toml para versões exatas.
-
-🤝 Contribuindo
-Crie uma branch para sua feature (git checkout -b feature/amazing-feature)
-Commit suas mudanças (git commit -m 'Add amazing feature')
-Push para a branch (git push origin feature/amazing-feature)
-Abra um Pull Request
-📧 Contato
-Desenvolvido por: Gabriel M. Marcos Email: gabrielmmarcos1@gmail.com
-
-📝 Licença
-Este projeto está sob licença MIT. Veja o arquivo LICENSE para mais detalhes.
-
-Última atualização: Maio 2024 
