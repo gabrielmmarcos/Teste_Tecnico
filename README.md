@@ -538,52 +538,61 @@ Deploy utilizando:
 ~ $100 - $500/mês para 10M requests/mês
 ```
 
-## Estrutura do Projeto
+# Estrutura do Projeto
+
+```txt
 mundo-invest/
 ├── src/
 │   ├── mundo_invest/
-│   │   ├── app.py                 # App principal FastAPI
-│   │   ├── database.py            # Configuração de banco de dados
-│   │   ├── settings.py            # Variáveis de ambiente
+│   │   ├── app.py
+│   │   ├── database.py
+│   │   ├── settings.py
+│   │   │
 │   │   ├── models/
-│   │   │   └── models.py          # Modelos SQLAlchemy (Cliente, Webhook)
-│   │   ├── schemas/               # Schemas Pydantic (validação)
+│   │   │   └── models.py
+│   │   │
+│   │   ├── schemas/
 │   │   │   ├── cliente_schemas.py
 │   │   │   ├── webhook_schemas.py
 │   │   │   └── root_schemas.py
-│   │   ├── routers/               # Rotas da API
+│   │   │
+│   │   ├── routers/
 │   │   │   ├── cliente_router.py
 │   │   │   └── webhook_router.py
-│   │   ├── services/              # Lógica de negócio
+│   │   │
+│   │   ├── services/
 │   │   │   ├── cliente_services.py
 │   │   │   └── webhook_services.py
+│   │   │
 │   │   ├── enums/
-│   │   │   └── enums.py           # Enums (Status, Prioridade)
+│   │   │   └── enums.py
+│   │   │
 │   │   └── pipefy_client/
-│   │       └── pipefy.py          # Integração Pipefy
-│   └── tests/                     # Testes unitários e integração
+│   │       └── pipefy.py
+│   │
+│   └── tests/
 │       ├── conftest.py
 │       ├── test_app.py
 │       ├── test_client.py
 │       ├── test_webhook_prioridade.py
 │       └── test_webhook_duplicate.py
-├── migrations/                    # Migrações Alembic
-├── .env                          # Variáveis de ambiente
+│
+├── migrations/
+├── .env
 ├── .gitignore
-├── Dockerfile                    # Build da aplicação
-├── compose.yaml                  # Docker Compose (PostgreSQL + API)
-├── pyproject.toml               # Configuração Poetry e dependências
-├── alembic.ini                  # Configuração Alembic
-├── entrypoint.sh                # Script de inicialização
-└── README.md                    # Este arquivo
-
+├── Dockerfile
+├── compose.yaml
+├── pyproject.toml
+├── alembic.ini
+├── entrypoint.sh
+└── README.md
+```
 
 ## Dependências Principais
-FastAPI: Web framework moderno
-SQLAlchemy: ORM assíncrono
-Pydantic: Validação de dados
-Alembic: Gerenciamento de migrações
-psycopg: Driver PostgreSQL assíncrono
-Pytest: Framework de testes
-Ruff: Linter e formatador
-Veja pyproject.toml para versões exatas.
+- FastAPI: Web framework moderno
+- SQLAlchemy: ORM assíncrono
+- Pydantic: Validação de dados
+- Alembic: Gerenciamento de migrações
+- psycopg: Driver PostgreSQL assíncrono
+- Pytest: Framework de testes
+- Ruff: Linter e formatador
