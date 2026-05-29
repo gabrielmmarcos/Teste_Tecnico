@@ -21,7 +21,7 @@ A API Mundo Invest é um sistema construído com FastAPI e PostgreSQL que permit
 
 ```bash
 git clone <repository-url>
-cd mundo-invest
+cd Teste_Tecnico
 ```
 
 ---
@@ -87,7 +87,7 @@ http://localhost:8000/docs
 
 ```bash
 git clone <repository-url>
-cd mundo-invest
+cd Teste_Tecnico
 ```
 
 ---
