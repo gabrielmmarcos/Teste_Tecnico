@@ -170,11 +170,11 @@ poetry run task test
 
 ### Testes disponíveis:
 
-test_app.py - Testes de endpoints da API
-test_client.py - Teste de criação de cliente
-test_webhook_prioridade.py - Teste de priorização via webhook
-test_webhook_duplicate.py - Teste de prevenção de webhooks duplicados
-test_db.py - Teste de integração com banco de dados
+- test_app.py - Testes de endpoints da API
+- test_client.py - Teste de criação de cliente
+- test_webhook_prioridade.py - Teste de priorização via webhook
+- test_webhook_duplicate.py - Teste de prevenção de webhooks duplicados
+- test_db.py - Teste de integração com banco de dados
 
 ## Exemplos de Requisição (curl)
 
